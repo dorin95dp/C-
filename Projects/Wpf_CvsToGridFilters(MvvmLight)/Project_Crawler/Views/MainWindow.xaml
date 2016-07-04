@@ -1,0 +1,46 @@
+﻿<Window x:Class="Project_Crawler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Project_Crawler.ValueConverters"
+        Title="Crawler" Height="350" Width="525"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}">
+    <Window.Resources>
+        <local:BooleanToStringValueConverter x:Key="BooleanToStringValueConverter" />
+    </Window.Resources>
+    <DockPanel LastChildFill="True" Margin="10">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <Button Content="Upload" Command="{Binding LoadEmployeesCommand}" Width="60" />
+            <Button Content="Filter" Command="{Binding LoadFilterCommand}" Width="55" Margin="5,0,0,0"/>
+            <Button Content="Find" Command ="{Binding ...}" Width="65" Margin="300,0,0,0"/>
+
+        </StackPanel>
+        
+        <DockPanel LastChildFill="True">
+            <GroupBox Header="Filters" Margin="0,0,0,10" DockPanel.Dock="Top">
+                <ListView ItemsSource="{Binding Filters}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="100" Text="{Binding Element}" />
+                                <RadioButton Margin="5,0,0,0" Content="None"
+                                             IsChecked="{Binding FindType, 
+                                    Converter={StaticResource BooleanToStringValueConverter}, 
+                                    ConverterParameter=None}"/>
+                                <RadioButton Margin="5,0,0,0" Content="Use"
+                                             IsChecked="{Binding FindType, 
+                                    Converter={StaticResource BooleanToStringValueConverter}, 
+                                    ConverterParameter=Use}"/>
+                                <RadioButton Margin="5,0,0,0" Content="Strict Use"
+                                             IsChecked="{Binding FindType, 
+                                    Converter={StaticResource BooleanToStringValueConverter}, 
+                                    ConverterParameter=StrictUse}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </GroupBox>
+            
+            <DataGrid ItemsSource="{Binding Employees}" IsReadOnly="True" Margin="0,0,0,10" />
+        </DockPanel>
+    </DockPanel>
+</Window>
